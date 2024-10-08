@@ -1,25 +1,11 @@
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-import csv 
 import pandas as pd
-import sys
-import numpy as np
 import seaborn as sns
-import matplotlib.ticker as ticker
+import numpy as np
 
 column = 20
-houses = 0
-
-value_from_column = 0
-value_to_column = -1
-
-def format_ticks(x, pos):
-    if x >= 1000 or x <= -1000:
-        return f'{int(x/1000)}k'
-    return str(int(x))
-
-def eprint(*args, **kwargs):
-	print('Error:', *args, file=sys.stderr, **kwargs)
+name = "winequality-red.csv"
 
 def display_all(df, citerias, qualities, data_each_quality):
 	num_citerias = len(citerias)
@@ -36,8 +22,6 @@ def display_all(df, citerias, qualities, data_each_quality):
 		axs[i].set_title(citeria)
 		axs[i].set_xlabel('value')
 		axs[i].set_ylabel('Frequency')
-		# axs[i].xaxis.set_major_formatter(ticker.FuncFormatter(format_ticks))
-		# axs[i].yaxis.set_major_formatter(ticker.FuncFormatter(format_ticks))
 	for j in range(len(citerias), len(axs)):
 		fig.delaxes(axs[j])
 	custom_lines = []
@@ -51,8 +35,6 @@ def display_all(df, citerias, qualities, data_each_quality):
 	plt.show()
 
 
-name = "abc.csv"
-
 def main() -> None:
 		df = pd.read_csv(name, sep=";")
 		citerias = df.columns[0:-1]
@@ -62,10 +44,9 @@ def main() -> None:
 		sorted_data = sorted(linked_quality_data, key=lambda x: len(x[1]))[::-1]
 		qualities = [item[0] for item in sorted_data]
 		data_each_quality = [item[1] for item in sorted_data]
+		for i in range(len(data_each_quality)):
+			print(f"For quality = {qualities[i]}, there are {len(data_each_quality[i])} samples")
 		display_all(df, citerias, qualities, data_each_quality)
-
-
-
 
 if  __name__ == "__main__":
 	main()

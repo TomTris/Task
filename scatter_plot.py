@@ -1,13 +1,12 @@
 from io import BytesIO
-import os
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import pandas as pd
-import numpy as np
 from matplotlib.lines import Line2D
-import sys
 import seaborn as sns
+import numpy as np
 
+name = "winequality-red.csv"
 current_citeria_index = 0
 
 def display_quality(fig, axs, colors, current_citeria, citerias):
@@ -25,7 +24,7 @@ def display_quality(fig, axs, colors, current_citeria, citerias):
 
 def save_all():
     global images
-    
+
     images = []
     num_citerias = len(citerias) - 1
     ncols = int(num_citerias ** 0.5) + 1
@@ -35,10 +34,9 @@ def save_all():
     custom_lines = sorted(custom_lines, key=lambda x: x[0])
     custom_lines = [line[1] for line in custom_lines]
 
-    for i, citeria in enumerate(citerias):
+    for citeria in citerias:
         fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(15, 12))
         plt.subplots_adjust(left=0, right=1, top=1, bottom=0, wspace=0, hspace=0)
-        # plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1, wspace=0.3, hspace=0.3)
         axs = axs.flatten()
         fig.suptitle(f"{citeria} with:", fontsize=25)
         display_quality(fig, axs, colors, citeria, citerias)
@@ -79,8 +77,6 @@ def on_key(event):
     elif event.key == 'escape':
         plt.close(fig)
 
-name = "abc.csv"
-
 def main():
     global qualities
     global df_of_qualities
@@ -90,7 +86,7 @@ def main():
     global df
     global qualities
     
-    df = pd.read_csv("abc.csv", sep=';')
+    df = pd.read_csv("winequality-red.csv", sep=';')
 
     citerias = df.columns
 
